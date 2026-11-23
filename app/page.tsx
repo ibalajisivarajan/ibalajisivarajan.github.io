@@ -1,5 +1,6 @@
 import { CaretDown, CheckCircle, Cards, Eye, Scales, Stack, Shuffle, HandTap, ArrowsClockwise, SealCheck } from '@phosphor-icons/react/dist/ssr';
-import { DeckTable } from '@/components/DeckTable';
+import { ThePack } from '@/components/ThePack';
+import { Scope21 } from '@/components/Scope21';
 import { DealButton } from '@/components/DealButton';
 import { Tagline } from '@/components/Tagline';
 import { Reveal } from '@/components/Reveal';
@@ -7,7 +8,6 @@ import { CaseCard } from '@/components/CaseCard';
 import { HeroFan } from '@/components/HeroFan';
 import { HeroCopy } from '@/components/HeroCopy';
 import { HeroBackdrop } from '@/components/HeroBackdrop';
-import { DeckRiver } from '@/components/DeckRiver';
 import { CARDS, SUITS, Suit } from '@/data/cards';
 
 const BENEFITS = [
@@ -71,8 +71,8 @@ export default function Home() {
         <div className="flex items-center gap-4 rounded-full border border-line bg-panel/70 px-4 py-2 backdrop-blur-xl sm:gap-6">
           <span className="button-sm text-white"><span className="sm:hidden">Bala</span><span className="hidden sm:inline">Balaji Sivarajan</span></span>
           <div className="flex items-center gap-4">
-            <a href="#table" aria-current="true" className="title-4 text-white">Deal</a>
-            <a href="#deck" className="title-4 text-muted transition-colors duration-300 ease-weighted hover:text-white">Deck</a>
+            <a href="#deck" aria-current="true" className="title-4 text-white">Cards</a>
+            <a href="#game" className="title-4 text-muted transition-colors duration-300 ease-weighted hover:text-white">Play</a>
             <a href="#faq" className="title-4 text-muted transition-colors duration-300 ease-weighted hover:text-white">FAQ</a>
           </div>
         </div>
@@ -86,20 +86,27 @@ export default function Home() {
           <HeroCopy />
           <HeroFan />
           </div>
-          <DeckTable />
+        </section>
+
+        {/* The hand */}
+        <section id="deck" className="flex scroll-mt-24 flex-col gap-12">
+          <Reveal>
+            <SectionHead eyebrow="The hand" title="Four cards to start" sub="Tap a card to read the case study. The rest of the pack is one tap away." />
+          </Reveal>
+          <ThePack />
+        </section>
+
+        {/* Game */}
+        <section className="flex flex-col gap-12">
+          <Reveal>
+            <SectionHead eyebrow="Play a hand" title="Can you scope an MVP better than me?" sub="A quick game of blackjack where every card is a real product decision." />
+          </Reveal>
+          <Scope21 />
         </section>
 
         {/* Tagline reveal */}
         <section className="py-16">
           <Tagline lines={['Every card is something I shipped,', 'ran or stopped on purpose.', 'The Aces are where I went deepest.']} />
-        </section>
-
-        {/* Deck in motion */}
-        <section className="flex flex-col gap-8">
-          <Reveal>
-            <SectionHead eyebrow="The deck in motion" title="Twenty one cards, always in play" sub="Hover to slow the river. Tap any card to read it." />
-          </Reveal>
-          <DeckRiver />
         </section>
 
         {/* Roles */}
