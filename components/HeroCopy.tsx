@@ -10,7 +10,7 @@ import { DealButton } from '@/components/DealButton';
 const EASE = [0.22, 1, 0.36, 1] as const;
 const LINES = ['Fifteen years of', 'shipping software,', 'dealt as 21 cards.'];
 const STATS = [
-  { n: 40, label: 'repos' },
+  { n: 41, label: 'repos' },
   { n: 15, label: 'years' },
   { n: 4, label: 'suits' },
   { n: 21, label: 'cards' },

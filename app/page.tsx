@@ -28,7 +28,7 @@ const FAQ = [
   { q: 'Can I see the code?', a: 'Daily Pulse v2 and my program management toolkits are public on GitHub. Talelo is a live startup and stays private. I am happy to walk through any card on a call.' },
   { q: 'Why do some cards have no numbers?', a: 'I only show numbers I can explain in an interview, including how they were measured. Enterprise outcomes appear once I have confirmed them.' },
   { q: 'Why is the research card under review?', a: 'The study is in peer review, so its findings and code stay private until the decision. The method is on the card.' },
-  { q: 'Where are you based?', a: 'Vancouver, BC. {{work authorization line}}' },
+  { q: 'Where are you based?', a: 'Vancouver, BC.' },
 ];
 
 const ROLES = [
@@ -168,7 +168,7 @@ export default function Home() {
         <div className="body-6 flex flex-wrap items-center gap-4">
           <a className="transition-colors duration-300 ease-weighted hover:text-white" href="https://www.linkedin.com/in/balaji-sivarajan-08-08/">LinkedIn</a>
           <a className="transition-colors duration-300 ease-weighted hover:text-white" href="https://github.com/ibalajisivarajan">GitHub</a>
-          <span className="ph">{'{{email}}'}</span>
+          <a className="transition-colors duration-300 ease-weighted hover:text-white" href="mailto:sbalaji.prof@gmail.com">sbalaji.prof@gmail.com</a>
           <span className="inline-flex items-center gap-1"><ArrowsClockwise size={14} /> No cookies, no tracking</span>
         </div>
       </footer>

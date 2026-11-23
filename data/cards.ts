@@ -147,22 +147,22 @@ export const CARDS: Card[] = [
   },
   {
     id: 'csaa', rank: 'K', suit: 'C', name: 'CSAA', role: 'Technical Program Manager', status: 'Apr 2021 to Apr 2023', pending: true,
-    what: '{{scope}}', calls: [], proof: [],
+    what: 'Details being confirmed.', calls: [], proof: [],
   },
   {
-    id: 'wisconsin', rank: 'Q', suit: 'C', name: 'Wisconsin Dept. of Revenue', role: 'Technical Project Manager', status: '{{dates}}', pending: true,
+    id: 'wisconsin', rank: 'Q', suit: 'C', name: 'Wisconsin Dept. of Revenue', role: 'Technical Project Manager', status: 'Earlier role', pending: true,
     what: 'Tax and audit platforms for a state agency.', calls: [], proof: [],
   },
   {
-    id: 'mattel', rank: 'J', suit: 'C', name: 'Mattel, AmericanGirl.com', role: 'Technical Project Manager', status: '{{dates}}', pending: true,
+    id: 'mattel', rank: 'J', suit: 'C', name: 'Mattel, AmericanGirl.com', role: 'Technical Project Manager', status: 'Earlier role', pending: true,
     what: 'eCommerce for AmericanGirl.com, including the Create Your Doll experience.', calls: [], proof: [],
   },
   {
-    id: 'cuna', rank: '10', suit: 'C', name: 'CUNA Mutual, TruStage', role: 'Technical Project Manager', status: '{{dates}}', pending: true,
+    id: 'cuna', rank: '10', suit: 'C', name: 'CUNA Mutual, TruStage', role: 'Technical Project Manager', status: 'Earlier role', pending: true,
     what: 'eCommerce for TruStage.com.', calls: [], proof: [],
   },
   {
-    id: 'chubb', rank: '9', suit: 'C', name: 'CHUBB', role: 'Software Engineer, Test', status: '{{dates}}', pending: true,
+    id: 'chubb', rank: '9', suit: 'C', name: 'CHUBB', role: 'Software Engineer, Test', status: 'Earlier role', pending: true,
     what: 'Migration of legacy workflow systems to one platform, across global teams.', calls: [], proof: [],
   },
   {
