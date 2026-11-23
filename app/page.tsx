@@ -5,6 +5,9 @@ import { Tagline } from '@/components/Tagline';
 import { Reveal } from '@/components/Reveal';
 import { CaseCard } from '@/components/CaseCard';
 import { HeroFan } from '@/components/HeroFan';
+import { HeroCopy } from '@/components/HeroCopy';
+import { HeroBackdrop } from '@/components/HeroBackdrop';
+import { DeckRiver } from '@/components/DeckRiver';
 import { CARDS, SUITS, Suit } from '@/data/cards';
 
 const BENEFITS = [
@@ -75,29 +78,12 @@ export default function Home() {
         </div>
       </nav>
 
-      <main id="main" className="mx-auto flex max-w-6xl flex-col gap-24 px-4 pb-16 pt-32 sm:gap-32">
+      <HeroBackdrop />
+      <main id="main" className="relative mx-auto flex max-w-6xl flex-col gap-32 px-4 pb-16 pt-32 sm:gap-48">
         {/* Hero */}
         <section className="flex flex-col gap-12">
           <div className="flex items-center justify-between gap-12">
-          <div className="flex flex-col gap-6">
-            <span className="caption-3 text-gold">Product builder · Vancouver, BC</span>
-            <h1 className="heading-1 hero-gradient max-w-[680px]">
-              Fifteen years of shipping software,
-              <br />
-              dealt as 21 cards.
-            </h1>
-            <p className="title-2 max-w-[680px] text-muted">
-              I am Bala. Every card is a product, AI system or program I ran, with the call I made and the evidence behind it.
-            </p>
-            <div className="flex flex-wrap items-center gap-6">
-              <DealButton />
-              <div className="flex flex-wrap gap-4 text-muted">
-                {['40 repos', '15 years', '4 suits', '21 cards'].map((p) => (
-                  <span key={p} className="body-5">{p}</span>
-                ))}
-              </div>
-            </div>
-          </div>
+          <HeroCopy />
           <HeroFan />
           </div>
           <DeckTable />
@@ -108,85 +94,12 @@ export default function Home() {
           <Tagline lines={['Every card is something I shipped,', 'ran or stopped on purpose.', 'The Aces are where I went deepest.']} />
         </section>
 
-        {/* Problem to solution */}
-        <Reveal>
-          <section className="grid gap-6 md:grid-cols-2">
-            <div className="flex flex-col gap-4 rounded-3xl border border-line bg-panel p-8">
-              <span className="caption-3 text-muted">The problem</span>
-              <h2 className="heading-4">A resume says what I worked on. It rarely shows who made the call.</h2>
-              <p className="body-3 text-muted">Titles and bullets tell you a program shipped. They do not show the trade offs, what got cut, or how the result was measured.</p>
-            </div>
-            <div className="flex flex-col gap-4 rounded-3xl border border-gold/40 bg-panel p-8">
-              <span className="caption-3 text-gold">This deck</span>
-              <h2 className="heading-4">Each card names the decision, the reason and the proof.</h2>
-              <p className="body-3 text-muted">Flip any card to read the case study: my role, my calls, the evidence you can check, and the caveats I would mention in an interview.</p>
-            </div>
-          </section>
-        </Reveal>
-
-        {/* Benefits */}
-        <Reveal>
-          <section className="flex flex-col gap-12">
-            <SectionHead eyebrow="What you get" title="Read a hand in two minutes, not a resume in ten" />
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {BENEFITS.map(({ icon: Icon, title, body }) => (
-                <div key={title} className="flex flex-col gap-4 rounded-2xl border border-line bg-panel p-6">
-                  <span className="grid size-10 place-items-center rounded-lg bg-raised text-gold">
-                    <Icon size={20} weight="duotone" />
-                  </span>
-                  <h3 className="title-2">{title}</h3>
-                  <p className="body-6 text-muted">{body}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-        </Reveal>
-
-        {/* How it works */}
-        <Reveal>
-          <section className="flex flex-col gap-12">
-            <SectionHead eyebrow="How it works" title="Three moves, no rules to learn" />
-            <ol className="grid gap-4 md:grid-cols-3">
-              {STEPS.map(({ icon: Icon, title, body }, i) => (
-                <li key={title} className="flex flex-col gap-4 rounded-2xl border border-line bg-panel p-6">
-                  <div className="flex items-center justify-between">
-                    <span className="grid size-10 place-items-center rounded-lg bg-raised text-gold">
-                      <Icon size={20} weight="duotone" />
-                    </span>
-                    <span className="caption-3 text-muted">Step {i + 1}</span>
-                  </div>
-                  <h3 className="title-1">{title}</h3>
-                  <p className="body-6 text-muted">{body}</p>
-                </li>
-              ))}
-            </ol>
-          </section>
-        </Reveal>
-
-        {/* Full deck */}
-        <section id="deck" className="flex scroll-mt-24 flex-col gap-12">
+        {/* Deck in motion */}
+        <section className="flex flex-col gap-8">
           <Reveal>
-            <SectionHead eyebrow="The full deck" title="All 21 cards, face up" sub="For anyone who would rather read than play. Tap any card for its case study." />
+            <SectionHead eyebrow="The deck in motion" title="Twenty one cards, always in play" sub="Hover to slow the river. Tap any card to read it." />
           </Reveal>
-          {(['S', 'H', 'D', 'C', 'J'] as Suit[]).map((s) => {
-            const list = CARDS.filter((c) => c.suit === s);
-            return (
-              <Reveal key={s}>
-                <div className="flex flex-col gap-4">
-                  <h3 className="title-1 flex items-baseline gap-2">
-                    <span className={SUITS[s].red ? 'text-suit-red' : 'text-white'}>{SUITS[s].glyph}</span>
-                    {SUITS[s].name}
-                    <span className="caption-5 text-muted">{list.length} cards</span>
-                  </h3>
-                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6">
-                    {list.map((c) => (
-                      <CaseCard key={c.id} card={c} />
-                    ))}
-                  </div>
-                </div>
-              </Reveal>
-            );
-          })}
+          <DeckRiver />
         </section>
 
         {/* Roles */}

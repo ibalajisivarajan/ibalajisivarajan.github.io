@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/morphing-dialog';
 import { Tilt } from '@/components/ui/tilt';
 import { PlayingCard } from '@/components/PlayingCard';
+import { FlipCard } from '@/components/FlipCard';
 import { Card, SUITS } from '@/data/cards';
 import { cn } from '@/lib/utils';
 import { ArrowUpRight } from '@phosphor-icons/react';
@@ -33,7 +34,7 @@ function Text({ children }: { children: string }) {
   );
 }
 
-export function CaseCard({ card, className }: { card: Card; className?: string }) {
+export function CaseCard({ card, className, flip }: { card: Card; className?: string; flip?: boolean }) {
   const s = SUITS[card.suit];
   return (
     <MorphingDialog transition={spring}>
@@ -41,8 +42,8 @@ export function CaseCard({ card, className }: { card: Card; className?: string }
         ariaLabel={`${card.rank} of ${s.name}: ${card.name}. Open the case study`}
         className={cn('block w-full rounded-2xl text-left', className)}
       >
-        <Tilt rotationFactor={8} isRevese className="transition-transform duration-300 ease-weighted hover:-translate-y-1 active:scale-[0.98]">
-          <PlayingCard card={card} />
+        <Tilt rotationFactor={10} isRevese className="transition-transform duration-300 ease-weighted hover:-translate-y-2 active:scale-[0.98]">
+          {flip ? <FlipCard card={card} /> : <PlayingCard card={card} />}
         </Tilt>
       </MorphingDialogTrigger>
       <MorphingDialogContainer>

@@ -1,7 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { animate, createTimeline, eases, stagger } from 'animejs';
+import { animate, createSpring, createTimeline, eases, stagger } from 'animejs';
+import { motion } from 'motion/react';
+import { BorderTrail } from '@/components/ui/border-trail';
 import { Shuffle, Spade } from '@phosphor-icons/react';
 import { CaseCard } from '@/components/CaseCard';
 import { CardBack } from '@/components/PlayingCard';
@@ -29,8 +31,25 @@ export function DeckTable() {
   const handRef = useRef<HTMLDivElement>(null);
   const reduced = useRef(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     reduced.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const el = handRef.current;
+    if (!el || reduced.current) return;
+    el.querySelectorAll<HTMLElement>('[data-dealt]').forEach((c) => (c.style.opacity = '0'));
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setDealId((n) => n + 1);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
     const onDeal = () => deal();
     window.addEventListener('deck:deal', onDeal);
     return () => window.removeEventListener('deck:deal', onDeal);
@@ -51,16 +70,22 @@ export function DeckTable() {
       el.dataset.dx = String(hidden ? -(r.left + r.width) : s.left + s.width / 2 - (r.left + r.width / 2));
       el.dataset.dy = String(hidden ? 0 : s.top + s.height / 2 - (r.top + r.height / 2));
     });
-    animate(cards, {
+    const flips = cards.map((c) => c.querySelector<HTMLElement>('[data-flip]')).filter(Boolean) as HTMLElement[];
+    flips.forEach((f) => (f.style.transform = 'rotateY(180deg)'));
+    const tl = createTimeline({ defaults: { ease: EASE } });
+    tl.add(cards, {
       translateX: { from: (el) => Number((el as HTMLElement).dataset.dx), to: 0 },
       translateY: { from: (el) => Number((el as HTMLElement).dataset.dy), to: 0 },
-      rotate: { from: () => -18 + Math.random() * 10, to: 0 },
-      scale: { from: 0.86, to: 1 },
-      opacity: { from: 0, to: 1, duration: 200 },
-      delay: stagger(90),
-      duration: 700,
-      ease: EASE,
-    });
+      rotate: { from: () => -24 + Math.random() * 14, to: 0 },
+      scale: { from: 0.8, to: 1 },
+      opacity: { from: 0, to: 1, duration: 150 },
+      delay: stagger(110),
+      duration: 650,
+    }).add(
+      flips,
+      { rotateY: { from: 180, to: 0 }, ease: createSpring({ stiffness: 140, damping: 13 }), delay: stagger(110) },
+      '-=250',
+    );
   }, [dealId]);
 
   const deal = useCallback(() => {
@@ -77,13 +102,15 @@ export function DeckTable() {
   const shuffle = useCallback(() => {
     setDeck(shuffled(ALL.filter((id) => !hand.includes(id))));
     if (reduced.current || !stackRef.current) return;
-    const [a, b] = Array.from(stackRef.current.querySelectorAll<HTMLElement>('[data-back]'));
-    const tl = createTimeline({ defaults: { duration: 260, ease: EASE } });
-    for (let i = 0; i < 2; i++) {
-      tl.add(a, { translateX: -64, rotate: -8 }, i * 520)
-        .add(b, { translateX: 64, rotate: 8 }, i * 520)
-        .add(a, { translateX: 0, rotate: 0 }, i * 520 + 260)
-        .add(b, { translateX: 0, rotate: 0 }, i * 520 + 260);
+    const backs = Array.from(stackRef.current.querySelectorAll<HTMLElement>('[data-back]'));
+    const tl = createTimeline({ defaults: { ease: EASE } });
+    for (let i = 0; i < 3; i++) {
+      const t = i * 560;
+      backs.forEach((el, k) => {
+        const side = k % 2 === 0 ? -1 : 1;
+        tl.add(el, { translateX: side * 72, translateY: -18, rotate: side * 14, duration: 280 }, t + k * 30)
+          .add(el, { translateX: 0, translateY: 0, rotate: 0, duration: 280 }, t + 280 + k * 30);
+      });
     }
   }, [hand]);
 
@@ -95,7 +122,10 @@ export function DeckTable() {
   }, []);
 
   return (
-    <div id="table" className="scroll-mt-24 rounded-3xl border border-line bg-panel p-4 sm:p-6">
+    <div id="table" className="relative scroll-mt-24 rounded-3xl border border-line bg-panel p-4 sm:p-6">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]">
+        <BorderTrail size={120} className="bg-gradient-to-l from-gold via-[#f6f1e3] to-gold/0" transition={{ repeat: Infinity, duration: 8, ease: 'linear' }} />
+      </div>
       <div className="flex flex-col gap-6">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="flex flex-col gap-1">
@@ -123,13 +153,11 @@ export function DeckTable() {
         <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-[112px_minmax(0,1fr)]">
           <div className="hidden flex-col items-center gap-3 md:flex">
             <div ref={stackRef} className="relative w-28">
-              <CardBack className="absolute left-1 top-1 opacity-70" />
-              <div data-back className="absolute inset-0">
-                <CardBack />
-              </div>
-              <div data-back className="relative">
-                <CardBack />
-              </div>
+              <CardBack className="absolute left-1.5 top-1.5 opacity-60" />
+              <div data-back className="absolute inset-0"><CardBack /></div>
+              <div data-back className="absolute inset-0"><CardBack /></div>
+              <div data-back className="absolute inset-0"><CardBack /></div>
+              <div data-back className="relative"><CardBack /></div>
             </div>
             <span className="caption-5 text-muted">{deck.length} left in the deck</span>
           </div>
@@ -140,13 +168,22 @@ export function DeckTable() {
           >
             {hand.map((id, i) => (
               <div key={`${dealId}-${id}`} data-dealt className="w-40 shrink-0 snap-start md:w-auto">
-                <CaseCard card={BY_ID[id]} />
+                <motion.div
+                  drag
+                  dragSnapToOrigin
+                  dragElastic={0.6}
+                  whileDrag={{ scale: 1.06, rotate: i % 2 ? 6 : -6, zIndex: 20 }}
+                  dragTransition={{ bounceStiffness: 260, bounceDamping: 14 }}
+                  className="relative touch-pan-x"
+                >
+                  <CaseCard card={BY_ID[id]} flip />
+                </motion.div>
                 <span className="sr-only">Card {i + 1} of 5</span>
               </div>
             ))}
           </div>
         </div>
-        <p className="caption-5 text-muted">Tap a card to read the case study. Swipe for more on a phone.</p>
+        <p className="caption-5 text-muted">Tap a card to read the case study. Drag one and let go.</p>
       </div>
     </div>
   );
