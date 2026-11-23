@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import './globals.css';
+import { SmoothScroll } from '@/components/SmoothScroll';
 
 const title = 'Balaji Sivarajan · Product builder · Vancouver';
 const description =
@@ -20,7 +21,10 @@ export const viewport: Viewport = { themeColor: '#131209' };
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={GeistSans.variable}>
-      <body>{children}</body>
+      <body>
+        <SmoothScroll />
+        {children}
+      </body>
     </html>
   );
 }
