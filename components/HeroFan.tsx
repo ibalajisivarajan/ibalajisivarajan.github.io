@@ -80,7 +80,7 @@ export function HeroFan() {
                 />
               )}
               <div className="relative">
-                <PlayingCard card={BY_ID[id]} />
+                <PlayingCard card={BY_ID[id]} eager />
               </div>
             </div>
           </div>

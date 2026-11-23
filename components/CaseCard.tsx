@@ -34,7 +34,7 @@ function Text({ children }: { children: string }) {
   );
 }
 
-export function CaseCard({ card, className, flip }: { card: Card; className?: string; flip?: boolean }) {
+export function CaseCard({ card, className, flip, caption = true }: { card: Card; className?: string; flip?: boolean; caption?: boolean }) {
   const s = SUITS[card.suit];
   return (
     <MorphingDialog transition={spring}>
@@ -45,6 +45,12 @@ export function CaseCard({ card, className, flip }: { card: Card; className?: st
         <Tilt rotationFactor={10} isRevese className="transition-transform duration-300 ease-weighted hover:-translate-y-2 active:scale-[0.98]">
           {flip ? <FlipCard card={card} /> : <PlayingCard card={card} />}
         </Tilt>
+        {caption && (
+          <span className="mt-3 flex flex-col items-center gap-0.5 text-center">
+            <span className="title-4 text-white">{card.name}</span>
+            <span className="caption-5 text-muted">{card.role}</span>
+          </span>
+        )}
       </MorphingDialogTrigger>
       <MorphingDialogContainer>
         <MorphingDialogContent className="relative z-50 mx-4 max-h-[calc(100dvh-48px)] w-full max-w-xl overflow-y-auto rounded-3xl bg-ivory p-2 text-ink">

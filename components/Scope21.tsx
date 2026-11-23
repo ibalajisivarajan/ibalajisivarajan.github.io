@@ -5,8 +5,7 @@ import { animate, createSpring, eases } from 'animejs';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowsCounterClockwise, Hand, Plus } from '@phosphor-icons/react';
 import { BACKLOG, BacklogCard, Call } from '@/data/backlog';
-import { CardBack } from '@/components/PlayingCard';
-import { CardFaceArt } from '@/components/CardArt';
+import { CardBack, CardImage, faceSrc } from '@/components/PlayingCard';
 import { cn } from '@/lib/utils';
 
 const EASE = eases.cubicBezier(0.22, 1, 0.36, 1);
@@ -31,9 +30,11 @@ const total = (ids: string[]) => ids.reduce((n, id) => n + BY[id].points, 0);
 
 function Face({ card }: { card: BacklogCard }) {
   return (
-    <div className="relative aspect-[5/7] w-full overflow-hidden rounded-xl bg-ivory shadow-[0_12px_24px_-10px_rgba(0,0,0,0.7)]">
-      <CardFaceArt rank={String(card.points)} s={card.product === 'Talelo' ? 'D' : 'C'} />
-    </div>
+    <CardImage
+      src={faceSrc(String(card.points), card.product === 'Talelo' ? 'D' : 'C')}
+      alt={`${card.points} of ${card.product === 'Talelo' ? 'diamonds' : 'clubs'}: ${card.name}`}
+      className="rounded-xl"
+    />
   );
 }
 
