@@ -1,0 +1,2 @@
+Card faces: Vector Playing Cards by Byron Knoll, public domain (code.google.com/p/vector-playing-cards), via github.com/hayeah/playing-cards-assets (MIT).
+Card back: original artwork for this site.
