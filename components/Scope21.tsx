@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { ArrowsCounterClockwise, Hand, Plus } from '@phosphor-icons/react';
 import { BACKLOG, BacklogCard, Call } from '@/data/backlog';
 import { CardBack } from '@/components/PlayingCard';
+import { CardFaceArt } from '@/components/CardArt';
 import { cn } from '@/lib/utils';
 
 const EASE = eases.cubicBezier(0.22, 1, 0.36, 1);
@@ -29,35 +30,29 @@ function shuffled() {
 const total = (ids: string[]) => ids.reduce((n, id) => n + BY[id].points, 0);
 
 function Face({ card }: { card: BacklogCard }) {
-  const red = card.product === 'Talelo';
-  const glyph = red ? '♦' : '♣';
   return (
-    <div className="aspect-[5/7] w-full rounded-xl bg-ivory p-1.5 shadow-[0_12px_24px_-10px_rgba(0,0,0,0.7)]">
-      <div className={cn('flex h-full flex-col rounded-md border border-ivory-line px-2 py-1.5', red ? 'text-suit-red' : 'text-ink')}>
-        <div className="flex items-center justify-between">
-          <span className="text-xl font-semibold leading-7">{card.points}</span>
-          <span className="text-base leading-4">{glyph}</span>
-        </div>
-        <div className="flex flex-1 flex-col items-center justify-center gap-1 text-center">
-          <span className="caption-4 text-ink">{card.name}</span>
-        </div>
-        <span className="caption-5 text-center text-ink/50">{card.product}</span>
-      </div>
+    <div className="relative aspect-[5/7] w-full overflow-hidden rounded-xl bg-ivory shadow-[0_12px_24px_-10px_rgba(0,0,0,0.7)]">
+      <CardFaceArt rank={String(card.points)} s={card.product === 'Talelo' ? 'D' : 'C'} />
     </div>
   );
 }
 
 function GameCard({ id, hidden }: { id: string; hidden?: boolean }) {
   return (
-    <div className="w-24 shrink-0 [perspective:1000px] sm:w-28">
+    <div className="flex w-24 shrink-0 flex-col gap-2 sm:w-28">
+    <div className="[perspective:1000px]">
       <div data-flip className="relative [transform-style:preserve-3d]" style={{ transform: hidden ? 'rotateY(180deg)' : undefined }}>
         <div className="[backface-visibility:hidden]">
           <Face card={BY[id]} />
         </div>
         <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
-          <CardBack className="rounded-xl p-1.5" />
+          <CardBack className="rounded-xl" />
         </div>
       </div>
+    </div>
+      <span className="caption-4 text-center text-muted" style={{ visibility: hidden ? 'hidden' : 'visible' }}>
+        {BY[id].name}
+      </span>
     </div>
   );
 }
@@ -200,7 +195,7 @@ export function Scope21() {
             <div className="flex gap-3">
               {[0, 1, 2].map((i) => (
                 <div key={i} className="w-24 sm:w-28" style={{ transform: `rotate(${(i - 1) * 6}deg)` }}>
-                  <CardBack className="rounded-xl p-1.5" />
+                  <CardBack className="rounded-xl" />
                 </div>
               ))}
             </div>
@@ -294,7 +289,7 @@ function Row({ label, score, children, bust, hideTotal }: { label: string; score
           {hideTotal ? `${score} showing` : `${score} points${bust ? ', over budget' : ''}`}
         </span>
       </div>
-      <div className="flex min-h-[136px] flex-wrap gap-3 sm:min-h-[160px]">{children}</div>
+      <div className="flex min-h-[184px] flex-wrap gap-3 sm:min-h-[216px]">{children}</div>
     </div>
   );
 }
