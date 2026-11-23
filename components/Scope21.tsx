@@ -5,7 +5,8 @@ import { animate, createSpring, eases } from 'animejs';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowsCounterClockwise, Hand, Plus } from '@phosphor-icons/react';
 import { BACKLOG, BacklogCard, Call } from '@/data/backlog';
-import { CardBack, CardImage, faceSrc } from '@/components/PlayingCard';
+import { CardBack } from '@/components/PlayingCard';
+import { ModernCard } from '@/components/ModernCard';
 import { cn } from '@/lib/utils';
 
 const EASE = eases.cubicBezier(0.22, 1, 0.36, 1);
@@ -29,25 +30,19 @@ function shuffled() {
 const total = (ids: string[]) => ids.reduce((n, id) => n + BY[id].points, 0);
 
 function Face({ card }: { card: BacklogCard }) {
-  return (
-    <CardImage
-      src={faceSrc(String(card.points), card.product === 'Talelo' ? 'D' : 'C')}
-      alt={`${card.points} of ${card.product === 'Talelo' ? 'diamonds' : 'clubs'}: ${card.name}`}
-      className="rounded-xl"
-    />
-  );
+  return <ModernCard rank={String(card.points)} suit={card.product === 'Talelo' ? 'D' : 'C'} />;
 }
 
 function GameCard({ id, hidden }: { id: string; hidden?: boolean }) {
   return (
-    <div className="flex w-24 shrink-0 flex-col gap-2 sm:w-28">
+    <div className="flex w-28 shrink-0 flex-col gap-2 sm:w-32">
     <div className="[perspective:1000px]">
       <div data-flip className="relative [transform-style:preserve-3d]" style={{ transform: hidden ? 'rotateY(180deg)' : undefined }}>
         <div className="[backface-visibility:hidden]">
           <Face card={BY[id]} />
         </div>
         <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
-          <CardBack className="rounded-xl" />
+          <CardBack />
         </div>
       </div>
     </div>
@@ -196,7 +191,7 @@ export function Scope21() {
             <div className="flex gap-3">
               {[0, 1, 2].map((i) => (
                 <div key={i} className="w-24 sm:w-28" style={{ transform: `rotate(${(i - 1) * 6}deg)` }}>
-                  <CardBack className="rounded-xl" />
+                  <CardBack />
                 </div>
               ))}
             </div>

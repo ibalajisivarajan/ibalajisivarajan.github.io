@@ -50,8 +50,8 @@ export function ThePack() {
       {!open ? (
         <div className="flex items-center gap-6">
           <div className="relative w-16 shrink-0" aria-hidden="true">
-            <CardBack className="absolute left-1 top-1 rounded-xl p-1 opacity-60" />
-            <CardBack className="relative rounded-xl p-1" />
+            <CardBack className="absolute left-1 top-1 opacity-60" />
+            <CardBack className="relative" />
           </div>
           <div className="flex flex-col items-start gap-2">
             <button

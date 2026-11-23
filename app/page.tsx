@@ -5,8 +5,7 @@ import { DealButton } from '@/components/DealButton';
 import { Tagline } from '@/components/Tagline';
 import { Reveal } from '@/components/Reveal';
 import { CaseCard } from '@/components/CaseCard';
-import { HeroFan } from '@/components/HeroFan';
-import { HeroCopy } from '@/components/HeroCopy';
+import { CascadeHero } from '@/components/CascadeHero';
 import { HeroBackdrop } from '@/components/HeroBackdrop';
 import { CARDS, SUITS, Suit } from '@/data/cards';
 
@@ -79,15 +78,8 @@ export default function Home() {
       </nav>
 
       <HeroBackdrop />
-      <main id="main" className="relative mx-auto flex max-w-6xl flex-col gap-32 px-4 pb-16 pt-32 sm:gap-48">
-        {/* Hero */}
-        <section className="flex flex-col gap-12">
-          <div className="flex items-center justify-between gap-12">
-          <HeroCopy />
-          <HeroFan />
-          </div>
-        </section>
-
+      <CascadeHero />
+      <main id="main" className="relative mx-auto flex max-w-6xl flex-col gap-32 px-4 pb-16 pt-24 sm:gap-48">
         {/* The hand */}
         <section id="deck" className="flex scroll-mt-24 flex-col gap-12">
           <Reveal>

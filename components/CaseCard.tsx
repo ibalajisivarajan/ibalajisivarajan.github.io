@@ -34,7 +34,7 @@ function Text({ children }: { children: string }) {
   );
 }
 
-export function CaseCard({ card, className, flip, caption = true }: { card: Card; className?: string; flip?: boolean; caption?: boolean }) {
+export function CaseCard({ card, className, flip, caption = false }: { card: Card; className?: string; flip?: boolean; caption?: boolean }) {
   const s = SUITS[card.suit];
   return (
     <MorphingDialog transition={spring}>

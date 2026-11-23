@@ -29,11 +29,11 @@ export function HeroCopy() {
     };
   }, []);
   return (
-    <div ref={ref} className="relative flex flex-col gap-6">
+    <div ref={ref} className="relative flex flex-col gap-4 sm:gap-6">
       <TextShimmer className="caption-3 [--base-color:#d4af5a] [--base-gradient-color:#f6f1e3]" duration={2.4}>
         Product builder · Vancouver, BC
       </TextShimmer>
-      <h1 className="heading-1 max-w-[680px]">
+      <h1 className="heading-1 max-w-[680px] max-sm:!text-4xl max-sm:!leading-10">
         {LINES.map((line, i) => (
           <span key={line} className="block overflow-hidden pb-1">
             <motion.span
@@ -57,7 +57,7 @@ export function HeroCopy() {
         ))}
       </h1>
       <motion.p
-        className="title-2 max-w-[680px] text-muted"
+        className="title-2 max-w-[680px] text-muted max-sm:!text-[length:16px] max-sm:!leading-6"
         initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
         animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
         transition={{ duration: 0.8, ease: EASE, delay: 0.55 }}
